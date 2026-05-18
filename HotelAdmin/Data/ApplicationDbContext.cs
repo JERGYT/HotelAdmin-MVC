@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using HotelAdmin.Models;
 
 namespace HotelAdmin.Data
+{
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
