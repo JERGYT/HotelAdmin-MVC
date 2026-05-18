@@ -1,0 +1,76 @@
+﻿@model HotelAdmin.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid p-0">
+    <div class="mb-4">
+        <h2 class="text-primary fw-bold mb-1">Dashboard</h2>
+        <p class="text-muted">Bienvenido al panel de control del sistema de reservas</p>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-md-6">
+            <div class="card h-100 p-4 border-0 shadow-sm" style="border: 1px solid var(--border) !important;">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background-color: var(--secondary); color: var(--primary);">
+                        <i class="fas fa-calendar-check fa-lg"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-muted mb-0">Reservas Activas</h6>
+                        <h3 class="fw-bold mb-0" style="color: var(--primary);">@Model.ReservasActivas</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6">
+            <div class="card h-100 p-4 border-0 shadow-sm" style="border: 1px solid var(--border) !important;">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="rounded d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background-color: var(--secondary); color: var(--accent);">
+                        <i class="fas fa-users fa-lg"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-muted mb-0">Huéspedes Hoy</h6>
+                        <h3 class="fw-bold mb-0" style="color: var(--primary);">@Model.HuespedesHoy</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm" style="border: 1px solid var(--border) !important;">
+        <div class="card-header bg-white p-4 border-bottom" style="border-color: var(--border) !important;">
+            <h5 class="fw-bold mb-0" style="color: var(--primary);">Reservas Recientes (Existentes)</h5>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead style="background-color: var(--secondary);">
+                    <tr>
+                        <th class="px-4 py-3 border-0">ID</th>
+                        <th class="px-4 py-3 border-0">Huésped</th>
+                        <th class="px-4 py-3 border-0">Habitación</th>
+                        <th class="px-4 py-3 border-0">Entrada</th>
+                        <th class="px-4 py-3 border-0">Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var res in Model.ReservasRecientes)
+                    {
+                        <tr>
+                            <td class="px-4 py-3">@res.Id</td>
+                            <td class="px-4 py-3 fw-medium">@res.NombreHuesped</td>
+                            <td class="px-4 py-3 text-muted">@res.TipoHabitacion</td>
+                            <td class="px-4 py-3 text-muted">@res.CheckIn.ToShortDateString()</td>
+                            <td class="px-4 py-3">
+                                <span class="badge @(res.Estado == HotelAdmin.Models.EstadoReserva.Confirmada ? "bg-success" : "bg-warning") bg-opacity-10 @(res.Estado == HotelAdmin.Models.EstadoReserva.Confirmada ? "text-success" : "text-warning") rounded-pill px-3 py-2">
+                                    @res.Estado
+                                </span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

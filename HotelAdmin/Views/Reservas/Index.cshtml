@@ -1,0 +1,98 @@
+﻿@model IEnumerable<HotelAdmin.Models.Reserva>
+@{
+    ViewData["Title"] = "Gestión de Reservas";
+}
+
+<div class="container-fluid p-0">
+    <div class="mb-4 d-flex align-items-center justify-content-between">
+        <h2 class="fw-bold text-primary">Gestión de Reservas</h2>
+        <button class="btn text-white fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#formReserva" style="background-color: var(--accent);">
+            <i class="fas fa-plus"></i> Nueva Reserva
+        </button>
+    </div>
+
+    <div class="collapse mb-4" id="formReserva">
+        <div class="card border-0 shadow-sm p-4">
+            <h5 class="fw-bold mb-3">Registrar Nueva Reserva</h5>
+            <form asp-action="Create" method="post">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Huésped</label>
+                        <input type="text" name="NombreHuesped" class="form-control" required />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Habitación</label>
+                        <select name="TipoHabitacion" class="form-select">
+                            <option value="0">Simple ($50k)</option>
+                            <option value="1">Doble ($80k)</option>
+                            <option value="2">Suite ($150k)</option>
+                            <option value="3">Suite Ejecutiva ($250k)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Vendedor</label>
+                        <select name="FuncionarioId" class="form-select" asp-items="ViewBag.Funcionarios" required>
+                            <option value="">Seleccione...</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Entrada</label>
+                        <input type="date" name="CheckIn" class="form-control" required />
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label small fw-bold">Salida</label>
+                        <input type="date" name="CheckOut" class="form-control" required />
+                    </div>
+                </div>
+                <div class="mt-3 text-end">
+                    <button type="submit" class="btn text-white px-4" style="background-color: var(--primary);">Guardar Reserva</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead style="background-color: var(--secondary);">
+                    <tr>
+                        <th class="px-4">Huésped</th>
+                        <th class="px-4">Habitación</th>
+                        <th class="px-4">Vendedor</th>
+                        <th class="px-4">Precio Total</th>
+                        <th class="px-4">Estado</th>
+                        <th class="px-4 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="px-4 fw-medium">@item.NombreHuesped</td>
+                            <td class="px-4 text-muted">@item.TipoHabitacion</td>
+                            <td class="px-4"><span class="badge bg-light text-dark border">@(item.Funcionario?.Nombre ?? "N/A")</span></td>
+                            <td class="px-4 fw-bold text-primary">@item.PrecioTotal.ToString("C0")</td>
+                            <td class="px-4">
+                                <span class="badge @(item.Estado == HotelAdmin.Models.EstadoReserva.Confirmada ? "bg-success" : "bg-warning") bg-opacity-10 @(item.Estado == HotelAdmin.Models.EstadoReserva.Confirmada ? "text-success" : "text-warning") rounded-pill px-3 py-2">
+                                    @item.Estado
+                                </span>
+                            </td>
+                            <td class="px-4 text-center">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-light text-primary">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('¿Eliminar reserva?');">
+                                        <button type="submit" class="btn btn-sm btn-light text-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

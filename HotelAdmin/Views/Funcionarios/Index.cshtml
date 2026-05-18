@@ -1,0 +1,51 @@
+﻿@model IEnumerable<HotelAdmin.Models.Funcionario>
+@{
+    ViewData["Title"] = "Funcionarios";
+}
+
+<div class="container-fluid p-0">
+    <h2 class="text-primary fw-bold mb-4">Panel de Funcionarios</h2>
+
+    <div class="card p-4 border-0 shadow-sm mb-4">
+        <form asp-action="Create" method="post" class="row g-3">
+            <div class="col-md-3"><input name="CodigoEmpleado" class="form-control" placeholder="Código EMP" required /></div>
+            <div class="col-md-3"><input name="Nombre" class="form-control" placeholder="Nombre Completo" required /></div>
+            <div class="col-md-3"><input name="Rol" class="form-control" placeholder="Rol / Cargo" required /></div>
+            <div class="col-md-3"><button type="submit" class="btn btn-warning w-100 fw-bold">Agregar al Equipo</button></div>
+        </form>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <table class="table table-hover align-middle mb-0">
+            <thead style="background-color: var(--secondary);">
+                <tr>
+                    <th class="px-4">Código</th>
+                    <th class="px-4">Nombre</th>
+                    <th class="px-4">Rol</th>
+                    <th class="px-4">Ventas Registradas</th>
+                    <th class="px-4 text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var f in Model)
+                {
+                    <tr>
+                        <td class="px-4">@f.CodigoEmpleado</td>
+                        <td class="px-4 fw-medium">@f.Nombre</td>
+                        <td class="px-4 text-muted">@f.Rol</td>
+                        <td class="px-4">
+                            <span class="badge rounded-pill bg-primary px-3 py-2">
+                                <i class="fas fa-shopping-cart me-1"></i> @f.Reservas.Count Ventas
+                            </span>
+                        </td>
+                        <td class="px-4 text-center">
+                            <form asp-action="Delete" asp-route-id="@f.Id" method="post">
+                                <button type="submit" class="btn btn-sm btn-light text-danger"><i class="fa fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Hotel Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="wrapper">
+            <aside class="sidebar">
+                <div class="sidebar-logo">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="logo-icon">
+                            <i class="fas fa-hotel fa-lg"></i>
+                        </div>
+                        <div>
+                            <h6 class="mb-0 fw-bold">Hotel Admin</h6>
+                            <small class="opacity-75" style="font-size: 10px;">Panel de Control</small>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="nav-menu">
+                    <a href="/Dashboard" class="nav-link-custom @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Dashboard" ? "active" : "")">
+                        <i class="fas fa-chart-line"></i> <span>Dashboard</span>
+                    </a>
+                    <a href="/Reservas" class="nav-link-custom @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Reservas" ? "active" : "")">
+                        <i class="fas fa-calendar-alt"></i> <span>Gestión de Reservas</span>
+                    </a>
+                    <a href="/Funcionarios" class="nav-link-custom @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Funcionarios" ? "active" : "")">
+                        <i class="fas fa-users"></i> <span>Funcionarios</span>
+                    </a>
+                    <a href="/Reportes" class="nav-link-custom @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Reportes" ? "active" : "")">
+                        <i class="fas fa-file-alt"></i> <span>Reportes</span>
+                    </a>
+                </nav>
+
+                <div class="p-3 border-top border-secondary">
+                    <div class="d-flex align-items-center gap-2 mb-3 px-2">
+                        <div class="rounded-circle bg-warning d-flex align-items-center justify-content-center text-dark" style="width: 32px; height: 32px; font-size: 12px; font-weight: bold; padding-left: 10px;">
+                            A
+                        </div>
+                        <div class="overflow-hidden">
+                            <p class="mb-0 small fw-bold text-truncate">@User.Identity.Name</p>
+                        </div>
+                    </div>
+                    <form asp-controller="Account" asp-action="Logout" method="post">
+                        <button type="submit" class="nav-link-custom border-0 bg-transparent w-100 text-start">
+                            <i class="fas fa-sign-out-alt"></i> <span>Cerrar Sesión</span>
+                        </button>
+                    </form>
+                </div>
+            </aside>
+
+            <main class="main-content">
+                @RenderBody()
+            </main>
+        </div>
+    }
+    else
+    {
+        @RenderBody()
+    }
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,86 @@
+﻿@model HotelAdmin.Models.ReportesViewModel
+@{
+    ViewData["Title"] = "Reportes y Estadísticas";
+}
+
+<div class="container-fluid p-0">
+    <div class="mb-4">
+        <h2 class="fw-bold mb-1" style="color: var(--primary);">Reportes y Estadísticas</h2>
+        <p class="text-muted">Análisis dinámico de datos del sistema</p>
+    </div>
+
+    <div class="card border-0 shadow-sm p-4 mb-4" style="border: 1px solid var(--border) !important;">
+        <h5 class="fw-bold mb-3" style="color: var(--primary);">Filtros de Reporte</h5>
+
+        <form method="get" asp-action="Index">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Período</label>
+                    <select name="periodo" class="form-select bg-light" onchange="this.form.submit()">
+                        <option value="week" selected="@(Model.Periodo == "week" ? "selected" : null)">Última Semana</option>
+                        <option value="month" selected="@(Model.Periodo == "month" ? "selected" : null)">Último Mes</option>
+                        <option value="quarter" selected="@(Model.Periodo == "quarter" ? "selected" : null)">Último Trimestre</option>
+                        <option value="year" selected="@(Model.Periodo == "year" ? "selected" : null)">Último Año</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label fw-bold small">Tipo de Reporte (Visual)</label>
+                    <select class="form-select bg-light">
+                        <option value="general" selected>General</option>
+                        <option value="reservations">Reservas</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-4">
+            <div class="card p-4 border-0 shadow-sm h-100" style="border: 1px solid var(--border) !important;">
+                <div class="rounded d-flex align-items-center justify-content-center mb-3" style="width: 48px; height: 48px; background-color: var(--secondary); color: var(--primary);">
+                    <i class="fas fa-calendar-check fa-lg"></i>
+                </div>
+                <h6 class="text-muted mb-1">Total de Reservas (@Model.Periodo)</h6>
+                <p class="h3 fw-bold mb-0" style="color: var(--primary);">@Model.TotalReservas</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-4 border-0 shadow-sm h-100" style="border: 1px solid var(--border) !important;">
+                <div class="rounded d-flex align-items-center justify-content-center mb-3" style="width: 48px; height: 48px; background-color: var(--secondary); color: var(--accent);">
+                    <i class="fas fa-chart-line fa-lg"></i>
+                </div>
+                <h6 class="text-muted mb-1">Ingresos Estimados</h6>
+                <p class="h3 fw-bold mb-0" style="color: var(--primary);">@Model.IngresosTotales.ToString("C0")</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-4 border-0 shadow-sm h-100" style="border: 1px solid var(--border) !important;">
+                <div class="rounded d-flex align-items-center justify-content-center mb-3" style="width: 48px; height: 48px; background-color: var(--secondary); color: #8b7355;">
+                    <i class="fas fa-user-tag fa-lg"></i>
+                </div>
+                <h6 class="text-muted mb-1">Ventas por Funcionario (Promedio)</h6>
+                <p class="h3 fw-bold mb-0" style="color: var(--primary);">@Model.PromedioVentasFuncionario.ToString("0.0")</p>
+                <small class="text-muted mt-2">Total general de ventas: @Model.TotalVentasFuncionarios</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm p-5 text-center" style="border: 1px solid var(--border) !important;">
+        <div class="max-w-2xl mx-auto">
+            <h3 class="fw-bold mb-2" style="color: var(--primary);">Exportar Informe</h3>
+            <p class="text-muted mb-4">Descargue el informe completo de las reservas del sistema</p>
+
+            <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center mt-4">
+                <a href="@Url.Action("ExportarExcel", "Reportes")" class="btn btn-success btn-lg d-flex align-items-center justify-content-center gap-3 px-4 py-3">
+                    <i class="fas fa-file-excel fa-2x"></i>
+                    <div class="text-start">
+                        <div class="fw-bold fs-6">Exportar en Excel</div>
+                        <div class="small opacity-75" style="font-size: 0.75rem;">Formato editable para análisis</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

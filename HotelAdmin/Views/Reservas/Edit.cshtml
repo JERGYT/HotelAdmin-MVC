@@ -1,0 +1,54 @@
+﻿@model HotelAdmin.Models.Reserva
+@{
+    ViewData["Title"] = "Editar Reserva";
+}
+
+<div class="container-fluid p-0">
+    <div class="mb-4">
+        <h2 class="fw-bold text-primary">Modificar Reserva #@Model.Id</h2>
+        <a asp-action="Index" class="text-decoration-none small text-muted"><i class="fas fa-arrow-left"></i> Volver</a>
+    </div>
+
+    <div class="card border-0 shadow-sm p-4" style="max-width: 800px;">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="row g-4">
+                <div class="col-md-12">
+                    <label class="form-label fw-bold small">Nombre del Huésped</label>
+                    <input asp-for="NombreHuesped" class="form-control" required />
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-bold small">Funcionario Responsable</label>
+                    <select asp-for="FuncionarioId" class="form-select" asp-items="ViewBag.Funcionarios" required></select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-bold small">Tipo de Habitación</label>
+                    <select asp-for="TipoHabitacion" class="form-select" asp-items="Html.GetEnumSelectList<HotelAdmin.Models.TipoHabitacion>()"></select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-bold small">Estado</label>
+                    <select asp-for="Estado" class="form-select" asp-items="Html.GetEnumSelectList<HotelAdmin.Models.EstadoReserva>()"></select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label fw-bold small">Check-In</label>
+                    <input asp-for="CheckIn" type="date" class="form-control" />
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label small fw-bold">Check-Out</label>
+                    <input asp-for="CheckOut" type="date" class="form-control" />
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top d-flex justify-content-end gap-3">
+                <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                <button type="submit" class="btn text-white px-5" style="background-color: var(--primary);">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
+</div>

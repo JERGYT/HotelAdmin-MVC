@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Iniciar Sesión";
+}
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="text-center mb-4">
+            <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 64px; height: 64px; background-color: var(--primary) !important;">
+                <i class="fas fa-hotel fa-2x"></i>
+            </div>
+            <h4 class="fw-bold" style="color: var(--primary);">Hotel Management</h4>
+            <p class="text-muted small">Sistema de Reservas</p>
+        </div>
+
+        <form asp-action="Login" method="post">
+            <div class="mb-3">
+                <label class="form-label small fw-bold">Usuario</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0 text-muted">
+                        <i class="fas fa-user"></i>
+                    </span>
+                    <input name="username" type="text" class="form-control bg-light border-start-0" placeholder="Ingrese su usuario" required />
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label small fw-bold">Contraseña</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light border-end-0 text-muted">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                    <input name="password" type="password" class="form-control bg-light border-start-0" placeholder="Ingrese su contraseña" required />
+                </div>
+            </div>
+
+            <button type="submit" class="btn text-white w-100 py-2 fw-bold mb-3" style="background-color: var(--primary);">
+                Ingresar
+            </button>
+
+            <div class="text-center">
+                <a href="#" class="text-decoration-none small" style="color: var(--accent);">¿Olvidó su contraseña?</a>
+            </div>
+        </form>
+    </div>
+</div>
